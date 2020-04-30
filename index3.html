@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display Webcam Stream</title>
+</head>
+
+<body>
+<div id="container">
+    <canvas id="canvasOutput"></canvas>
+    <video autoplay="true" id="videoElement"></video>
+</div>
+
+<div class = 'video'>
+    <img id="image">
+</div>
+
+<!-- <script src="127.0.0.1:5000/socket.io/socket.io.js"></script> -->
+<scrip src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script> -->
+
+<script type="text/javascript" charset="utf-8">
+    console.log("here")
+    var socket = io('http://localhost:5000');
+
+    socket.on('connect', function(){
+        console.log("Connected...!", socket.connected)
+    });
+
+    const video = document.querySelector("#videoElement");
+
+    video.width = 500; 
+    video.height = 375; ;
+
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+            video.srcObject = stream;
+            video.play();
+        })
+        .catch(function (err0r) {
+            console.log(err0r)
+            console.log("Something went wrong!");
+        });
+    }
+
+    let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+    let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
+    let cap = new cv.VideoCapture(video);
+
+    const FPS = 22;
+
+    setInterval(() => {
+        cap.read(src);
+        var type = "image/png"
+        var data = document.getElementById("canvasOutput").toDataURL(type);
+        data = data.replace('data:' + type + ';base64,', ''); //split off junk at the beginning
+
+        socket.emit('image', data);
+    }, 10000/FPS);
+
+
+    socket.on('response_back', function(image){
+        const image_id = document.getElementById('image');
+        image_id.src = image;
+    });
+
+</script>
+</body>
+</html>
+
