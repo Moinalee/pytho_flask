@@ -1,10 +1,13 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
+from flask_cors import cross_origin,CORS
 
 app = Flask(__name__)
+#CORS(app, supports_credentials=True)
 socketio = SocketIO(app)
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/',methods=['POST', 'GET'])
+@cross_origin(supports_credentials=True)
 def index():
     return render_template('index3.html')
 
