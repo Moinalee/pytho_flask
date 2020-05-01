@@ -50,22 +50,23 @@
     let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
     let cap = new cv.VideoCapture(video);
 
-    const FPS = 22;
+    const FPS = 30;
 
     setInterval(() => {
         cap.read(src);
         var type = "image/png"
         var data = document.getElementById("canvasOutput").toDataURL(type);
-        data = data.replace('data:' + type + ';base64,', ''); //split off junk at the beginning
+        //data = data.replace('data:' + type + ';base64,', ''); //split off junk at the beginning
 
         socket.emit('image', data);
         console.log(data)
-    }, 10000/FPS);
+    }, 1000/FPS);
 
 
     socket.on('response_back', function(image){
         const image_id = document.getElementById('image');
-        image_id.src = image;
+        console.log("receiving back")
+        //image_id.src = image;
     });
 
 </script>
