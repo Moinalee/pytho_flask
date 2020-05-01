@@ -6,6 +6,7 @@ from io import StringIO,BytesIO
 import base64
 import cv2
 import imutils
+from PIL import Image
 
 app = Flask(__name__)
 #CORS(app, supports_credentials=True)
@@ -35,21 +36,21 @@ def image(data_image):
     # decode and convert into image
     b = BytesIO(base64.b64decode(data_image))
     print(b,"here")
-    pimg = Image.open(b)
+    frame = Image.open(b)
 
     # Process the image frame
-    frame = imutils.resize(frame, width=700)
-    frame = cv2.flip(frame, 1)
-    imgencode = cv2.imencode('.jpg', frame)[1]
+    #frame = imutils.resize(frame, width=200)
+    #frame = cv2.flip(frame, 1)
+    #imgencode = cv2.imencode('.jpg', frame)[1]
 
     # base64 encode
-    stringData = base64.b64encode(imgencode).decode('utf-8')
-    b64_src = 'data:image/jpg;base64,'
-    stringData = b64_src + stringData
+    #stringData = base64.b64encode(imgencode).decode('utf-8')
+    #b64_src = 'data:image/jpg;base64,'
+    #stringData = b64_src + stringData
 
     # emit the frame back
-    emit('response_back', stringData)
-    print(stringData)
+    #emit('response_back', stringData)
+    #print(stringData)
 
 if __name__ == '__main__':
     #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
