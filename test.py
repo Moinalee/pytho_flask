@@ -1,6 +1,11 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 from flask_cors import cross_origin,CORS
+import ssl
+from io import StringIO,BytesIO
+import base64
+import cv2
+import imutils
 
 app = Flask(__name__)
 #CORS(app, supports_credentials=True)
@@ -23,11 +28,13 @@ def catch_frame(data):
 
 @socketio.on('image')
 def image(data_image):
+    print(data_image,"data_image")
     sbuf = StringIO()
     sbuf.write(data_image)
 
     # decode and convert into image
-    b = io.BytesIO(base64.b64decode(data_image))
+    b = BytesIO(base64.b64decode(data_image))
+    print(b,"here")
     pimg = Image.open(b)
 
     # Process the image frame
@@ -45,4 +52,6 @@ def image(data_image):
     print(stringData)
 
 if __name__ == '__main__':
-    socketio.run(app, host='127.0.0.1',debug=True)
+    #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    #context.load_cert_chain('server.crt', 'server.key')
+    socketio.run(app,host='0.0.0.0',debug=True)#,ssl_context=context)
