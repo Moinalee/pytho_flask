@@ -9,9 +9,11 @@ import imutils
 from PIL import Image
 import numpy as np
 from threading import Thread
+from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__)
 #CORS(app, supports_credentials=True)
+run_with_ngrok(app)
 socketio = SocketIO(app)
 
 @app.route('/',methods=['POST', 'GET'])
@@ -61,7 +63,7 @@ def image(data_image):
 
     # emit the frame back
     emit('response_back', stringData)
-    print(stringData)
+    #print(stringData)
 def showing():
         just = cv2.imread('/color_img.jpg')
         cv2.imshow('Gray',just)
@@ -70,5 +72,6 @@ def showing():
 if __name__ == '__main__':
     #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     #context.load_cert_chain('server.crt', 'server.key')
-    socketio.run(app,host='0.0.0.0',debug=True)#,ssl_context=context)
+    #socketio.run(app,host = '0.0.0.0',debug=True)#,ssl_context=context)
+    app.run()
     #Thread(target=showing).start()
