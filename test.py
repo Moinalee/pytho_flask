@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
-from flask_cors import cross_origin,CORS
+#from flask_cors import cross_origin,CORS
 import ssl
 from io import StringIO,BytesIO
 import base64
@@ -8,8 +8,8 @@ import cv2
 import imutils
 from PIL import Image
 import numpy as np
-from threading import Thread
-from flask_ngrok import run_with_ngrok
+#from threading import Thread
+#from flask_ngrok import run_with_ngrok
 from fastai import *
 from fastai.vision import *
 import eventlet
