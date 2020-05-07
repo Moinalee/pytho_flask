@@ -21,7 +21,7 @@
 
 <script type="text/javascript" charset="utf-8">
     console.log("here")
-    var socket = io.connect('https://localhost:5000');
+    var socket = io.connect('https://localhost:3000');
 
     socket.on('connect', function(){
         console.log("Connected...!", socket.connected)
@@ -55,12 +55,16 @@
     let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
     //let cap = new cv.VideoCapture(video);
     const FPS = 30;
+    var count = 0;
     function processVideo() {
+        
         try {
             let begin = Date.now();
             context.drawImage(video, 0, 0, canvasFrame.height, canvasFrame.width);
             var img = canvasFrame.toDataURL('image/jpeg');
-            socket.emit('image', img);
+            count = count +1 ;
+            console.log(count);
+            socket.emit('image', [img,count]);
             let delay = 1000/FPS - (Date.now() - begin);
             setTimeout(processVideo, delay);
         } catch (err) {
@@ -79,4 +83,3 @@
 </script>
 </body>
 </html>
-
