@@ -1,0 +1,9 @@
+Flask==1.1.2
+Flask-SocketIO==4.3.0
+fastai==1.0.61
+opencv-python==4.1.1
+Pillow==7.1.2
+numpy==1.18.4
+eventlet==0.25.2
+imutils==0.5.3
+ssl==1.16
