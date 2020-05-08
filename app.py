@@ -70,11 +70,13 @@ def image(data_image):
     image1 = data_image[0]
     count = data_image[1]
     print(count)
-    frame = data_uri_to_cv2_img(image1)
-    t = pil2tensor(frame,dtype=np.uint8)
-    t = t.permute(2,0,1)
-    t = t.float()/255. #Convert to float
-    im = Image(t)
+    data_bytes = io.BytesIO(base64.b64decode(data_image[0]))
+    im = open_image(image_bytes)
+    #frame = data_uri_to_cv2_img(image1)
+    #t = pil2tensor(frame,dtype=np.uint8)
+    #t = t.permute(2,0,1)
+    #t = t.float()/255. #Convert to float
+    #im = Image(t)
     #count = 0
     #count += 1
     if(count%30==0):
