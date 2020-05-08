@@ -46,7 +46,7 @@ app.config['SECRET_KEY'] = 'secret!'
 #CORS(app, supports_credentials=True)
 #run_with_ngrok(app)
 global emit_num
-socketio = SocketIO(app,cors_allowed_origins=['http://localhost:3000','https://localhost:3000'])
+socketio = SocketIO(app,cors_allowed_origins=['http://34.105.3.146:3000','https://34.105.3.146:3000'])
 
 @app.route('/',methods=['POST', 'GET'])
 @cross_origin(supports_credentials=True)
