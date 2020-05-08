@@ -28,9 +28,7 @@ def acc_camvid(input, target):
     mask = target != void_code
     return (input.argmax(dim=1)[mask]==target[mask]).float().mean()
 
-metrics = acc_camvid
 
-learn = load_learner(path,export_file_name)
 
 
 def data_uri_to_cv2_img(uri):
@@ -118,6 +116,9 @@ if __name__ == '__main__':
     #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     #context.load_cert_chain('server.crt', 'server.key')
     #socketio.run(app,host = 'localhost',debug=True,ssl_context=context)
+    metrics = acc_camvid
+
+    learn = load_learner(path,export_file_name)
     app.run(debug=True,host='0.0.0.0',port=3000)
     #Thread(target=showing).start()
     #global count

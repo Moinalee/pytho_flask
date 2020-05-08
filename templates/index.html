@@ -21,7 +21,7 @@
 
 <script type="text/javascript" charset="utf-8">
     console.log("here")
-    var socket = io.connect('https://34.105.3.146:3000');
+    var socket = io.connect('http://0.0.0.0:3000');
 
     socket.on('connect', function(){
         console.log("Connected...!", socket.connected)
