@@ -8,7 +8,7 @@ import cv2
 import imutils
 from PIL import Image
 import numpy as np
-from threading import Thread
+#from threading import Thread
 from flask_ngrok import run_with_ngrok
 from fastai import *
 from fastai.vision import *
@@ -44,7 +44,7 @@ def data_uri_to_cv2_img(uri):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 #CORS(app, supports_credentials=True)
-#run_with_ngrok(app)
+run_with_ngrok(app)
 global emit_num
 socketio = SocketIO(app,cors_allowed_origins=['http://34.105.3.146:3000','https://34.105.3.146:3000'])
 
@@ -123,7 +123,7 @@ if __name__ == '__main__':
     #global count
     #count = 0
     eventlet.wsgi.server(
-        eventlet.wrap_ssl(eventlet.listen(("localhost", 3000)),
+        eventlet.wrap_ssl(eventlet.listen(("0.0.0.0", 3000)),
                           certfile='cert.pem',
                           keyfile='key.pem',
                           server_side=True), app)   
