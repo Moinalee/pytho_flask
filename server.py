@@ -7,10 +7,13 @@
 import time
 import zmq
 import cv2
+import sys
+import os
 import numpy as np
 import base64
 import io
 from PIL import Image
+from sys import platform
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
@@ -255,21 +258,7 @@ try:
             socket.send(keypoint_str_byte)
         else:
             socket.send(b'0' + b',0'*49 + b',999,999,100,100,-1')        # total : 25 (x, y), so a total of 50 coordinate values
-        #cv2.imshow('myloadedfile.png', image1)
-        #cv2.waitKey(2)
-        #cv2.destroyAllWindows()
-        
-        
-        #message_string = message_string[2:-1]
-        #print(message_string)
-
-
-
-        #  Try reducing sleep time to 0.01 to see how blazingly fast it communicates
-        #  In the real world usage, you just need to replace time.sleep() with
-        #  whatever work you want python to do, maybe a machine learning task?
         time.sleep(.01)
-
-        #  Send reply back to client
-        #  In the real world usage, after you finish your work, send your output here
-        
+except Exception as e:
+    print(e)
+    sys.exit(-1)
