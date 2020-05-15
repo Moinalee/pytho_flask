@@ -14,6 +14,8 @@ import base64
 import io
 from PIL import Image
 from sys import platform
+import argparse
+import math
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
@@ -121,15 +123,15 @@ try:
 
 
         message_string = message.decode("utf-8")
-        image1 = stringToRGB(message_string)
+        frame = stringToRGB(message_string)
         #print(image1)
-        print(image1.shape)
+        print(frame.shape)
 
-        if(frame.shape[0]!=540 or frame.shape[1]!=960):
+        if(frame.shape[0]!=480 or frame.shape[1]!=640):
             print("image is not in right size , width should be 960 and height 540")
             break
 
-        frame_crop = image1[:, 210:750, :].copy()
+        frame_crop = frame.copy()
         datum = op.Datum()
         datum.cvInputData = frame_crop
         opWrapper.emplaceAndPop([datum])
